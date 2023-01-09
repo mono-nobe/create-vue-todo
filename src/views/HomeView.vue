@@ -54,15 +54,15 @@ const deleteText = (targetTodo) => {
       <h1>TODO app</h1>
     </div>
     <div class="container">
-      <div class="item todo-first-lines">
+      <div class="item all-todos">
         <ul>
           <li v-for="todo in todos" :key="todo.id">
             <button
               @click="selectTodo(todo)"
               :class="
                 todo !== selectedTodo
-                  ? 'link-style-btn todo-first-line'
-                  : 'selected-todo'
+                  ? 'todo-first-line link-style-btn'
+                  : 'selected-todo-first-line'
               "
             >
               {{ extractFirstLine(todo.text) }}
@@ -95,7 +95,7 @@ ul {
   display: flex;
 }
 
-.todo-first-lines {
+.all-todos {
   width: 20%;
   word-break: break-all;
 }
@@ -116,7 +116,7 @@ ul {
   text-decoration: underline;
 }
 
-.selected-todo {
+.selected-todo-first-line {
   text-align: left;
   border: none;
   background: none;

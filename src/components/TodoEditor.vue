@@ -15,17 +15,17 @@ const todoText = computed({
     return props.selectedTodo.text;
   },
   set: (value) => {
-    editedTodoText.value = value;
+    editingTodoText.value = value;
   },
 });
 
-const editedTodoText = ref("");
+const editingTodoText = ref("");
 const saveTodo = () => {
-  if (editedTodoText.value === "") {
+  if (editingTodoText.value === "") {
     return;
   }
 
-  emits("save", editedTodoText.value);
+  emits("save", editingTodoText.value);
 };
 const deleteTodo = () => emits("delete", props.selectedTodo);
 </script>
@@ -34,10 +34,10 @@ const deleteTodo = () => emits("delete", props.selectedTodo);
   <div>
     <form id="todo-form">
       <textarea
+        v-model="todoText"
         cols="30"
         rows="15"
         placeholder="文字を入力してください"
-        v-model="todoText"
         required
       ></textarea>
     </form>
