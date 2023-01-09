@@ -7,20 +7,14 @@ const selectTodo = (todo) => {
   selectedTodo.value = todo;
 };
 
-let todos = ref([
-  {
-    id: 1,
-    text: "hoge",
-  },
-  {
-    id: 2,
-    text: "piyo",
-  },
-  {
-    id: 3,
-    text: "fuga",
-  },
-]);
+let todos = ref([]);
+if (localStorage.todos !== undefined) {
+  todos.value = JSON.parse(localStorage.getItem("todos"));
+}
+
+function reset() {
+  localStorage.clear();
+}
 
 function createTodo() {
   const id = detectMaxId();
@@ -43,10 +37,12 @@ function detectMaxId() {
 
 const saveTest = (text) => {
   selectedTodo.value.text = text;
+  localStorage.setItem("todos", JSON.stringify(todos.value));
 };
 
 const deleteText = (targetTodo) => {
   todos.value = todos.value.filter((todo) => todo !== targetTodo);
+  localStorage.setItem("todos", JSON.stringify(todos.value));
 };
 </script>
 
@@ -58,6 +54,7 @@ const deleteText = (targetTodo) => {
           <button @click="selectTodo(todo)">{{ todo.text }}</button>
         </li>
         <li><button @click="createTodo">+</button></li>
+        <li><button @click="reset">reset</button></li>
       </ul>
     </div>
 
@@ -66,7 +63,5 @@ const deleteText = (targetTodo) => {
       @save="saveTest"
       @delete="deleteText"
     />
-    <div>-----------------------------------</div>
-    <div>{{ selectedTodo }}</div>
   </main>
 </template>

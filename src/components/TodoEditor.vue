@@ -6,10 +6,6 @@ const props = defineProps({
 });
 const emits = defineEmits(["save", "delete"]);
 
-const editedTodoText = ref("");
-const saveTodo = () => emits("save", editedTodoText.value);
-const deleteTodo = () => emits("delete", props.selectedTodo);
-
 const todoText = computed({
   get: () => {
     if (props.selectedTodo === undefined) {
@@ -22,27 +18,34 @@ const todoText = computed({
     editedTodoText.value = value;
   },
 });
+
+const editedTodoText = ref("");
+const saveTodo = () => {
+  if (editedTodoText.value === "") {
+    return;
+  }
+
+  emits("save", editedTodoText.value);
+};
+const deleteTodo = () => emits("delete", props.selectedTodo);
 </script>
 
 <template>
-  <div>
-    <textarea
-      cols="30"
-      rows="10"
-      placeholder="文字を入力してください"
-      v-model="todoText"
-    ></textarea>
+  <div v-show="selectedTodo !== undefined">
+    <form>
+      <textarea
+        cols="30"
+        rows="10"
+        placeholder="文字を入力してください"
+        v-model="todoText"
+        required
+      ></textarea>
+      <div>
+        <input type="submit" value="保存" @click="saveTodo" />
+        <input type="submit" value="削除" @click="deleteTodo" />
+      </div>
+    </form>
   </div>
-  <div>
-    <button @click="saveTodo">保存</button>
-    <button @click="deleteTodo">削除</button>
-  </div>
-
-  <div>-----------------------------------</div>
-
-  <div>this is todo!!!</div>
-  <div>{{ todoText }}</div>
-  <div>-----------------------------------</div>
 </template>
 
 <style scoped>
