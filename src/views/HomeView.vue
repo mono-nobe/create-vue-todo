@@ -12,6 +12,10 @@ if (localStorage.todos !== undefined) {
   todos.value = JSON.parse(localStorage.getItem("todos"));
 }
 
+const extractFirstLine = (text) => {
+  return text.split("\n")[0];
+};
+
 const reset = () => {
   localStorage.clear();
 };
@@ -51,7 +55,9 @@ const deleteText = (targetTodo) => {
     <div>
       <ul>
         <li v-for="todo in todos" :key="todo.id">
-          <button @click="selectTodo(todo)">{{ todo.text }}</button>
+          <button @click="selectTodo(todo)">
+            {{ extractFirstLine(todo.text) }}
+          </button>
         </li>
         <li><button @click="createTodo">+</button></li>
         <li><button @click="reset">reset</button></li>
