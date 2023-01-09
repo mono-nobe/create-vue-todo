@@ -4,6 +4,10 @@ import { ref } from "vue";
 
 const selectedTodo = ref();
 const selectTodo = (todo) => {
+  if (selectedTodo.value !== undefined && selectedTodo.value.text === "") {
+    todos.value.pop();
+  }
+
   selectedTodo.value = todo;
 };
 
