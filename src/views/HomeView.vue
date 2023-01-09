@@ -1,5 +1,4 @@
 <script setup>
-import TheWelcome from "../components/TheWelcome.vue";
 import TodoEditor from "../components/TodoEditor.vue";
 import { ref } from "vue";
 
@@ -8,7 +7,7 @@ const selectTodo = (todo) => {
   selectedTodo.value = todo;
 };
 
-const todos = [
+let todos = ref([
   {
     id: 1,
     text: "hoge",
@@ -21,26 +20,44 @@ const todos = [
     id: 3,
     text: "fuga",
   },
-];
+]);
+
+function createTodo() {
+  const id = detectMaxId();
+  const todo = {
+    id: id + 1,
+    text: "",
+  };
+
+  todos.value.push(todo);
+  selectTodo(todo);
+}
+
+function detectMaxId() {
+  if (todos.value.length === 0) {
+    return 0;
+  }
+
+  return Math.max(...todos.value.map((todo) => todo.id));
+}
 
 const saveTest = (text) => {
   selectedTodo.value.text = text;
 };
 
-const deleteText = (text) => {
-  console.log("deleteText....");
-  console.log(text);
+const deleteText = (targetTodo) => {
+  todos.value = todos.value.filter((todo) => todo !== targetTodo);
 };
 </script>
 
 <template>
   <main>
-    <!-- <TheWelcome /> -->
     <div>
       <ul>
         <li v-for="todo in todos" :key="todo.id">
           <button @click="selectTodo(todo)">{{ todo.text }}</button>
         </li>
+        <li><button @click="createTodo">+</button></li>
       </ul>
     </div>
 

@@ -8,7 +8,7 @@ const emits = defineEmits(["save", "delete"]);
 
 const editedTodoText = ref("");
 const saveTodo = () => emits("save", editedTodoText.value);
-const deleteTodo = () => emits("delete");
+const deleteTodo = () => emits("delete", props.selectedTodo);
 
 const todoText = computed({
   get: () => {
