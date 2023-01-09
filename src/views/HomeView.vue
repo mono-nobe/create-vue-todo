@@ -7,16 +7,16 @@ const selectTodo = (todo) => {
   selectedTodo.value = todo;
 };
 
-let todos = ref([]);
+const todos = ref([]);
 if (localStorage.todos !== undefined) {
   todos.value = JSON.parse(localStorage.getItem("todos"));
 }
 
-function reset() {
+const reset = () => {
   localStorage.clear();
-}
+};
 
-function createTodo() {
+const createTodo = () => {
   const id = detectMaxId();
   const todo = {
     id: id + 1,
@@ -25,15 +25,15 @@ function createTodo() {
 
   todos.value.push(todo);
   selectTodo(todo);
-}
+};
 
-function detectMaxId() {
+const detectMaxId = () => {
   if (todos.value.length === 0) {
     return 0;
   }
 
   return Math.max(...todos.value.map((todo) => todo.id));
-}
+};
 
 const saveTest = (text) => {
   selectedTodo.value.text = text;
