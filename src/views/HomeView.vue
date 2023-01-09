@@ -2,15 +2,6 @@
 import TodoEditor from "../components/TodoEditor.vue";
 import { ref } from "vue";
 
-const selectedTodo = ref();
-const selectTodo = (todo) => {
-  if (selectedTodo.value !== undefined && selectedTodo.value.text === "") {
-    todos.value.pop();
-  }
-
-  selectedTodo.value = todo;
-};
-
 const todos = ref([]);
 if (localStorage.todos !== undefined) {
   todos.value = JSON.parse(localStorage.getItem("todos"));
@@ -18,6 +9,15 @@ if (localStorage.todos !== undefined) {
 
 const extractFirstLine = (text) => {
   return text.split("\n")[0];
+};
+
+const selectedTodo = ref();
+const selectTodo = (todo) => {
+  if (selectedTodo.value !== undefined && selectedTodo.value.text === "") {
+    todos.value.pop();
+  }
+
+  selectedTodo.value = todo;
 };
 
 const createTodo = () => {
