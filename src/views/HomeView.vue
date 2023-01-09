@@ -39,7 +39,7 @@ const detectMaxId = () => {
   return Math.max(...todos.value.map((todo) => todo.id));
 };
 
-const saveTest = (text) => {
+const saveText = (text) => {
   selectedTodo.value.text = text;
   localStorage.setItem("todos", JSON.stringify(todos.value));
 };
@@ -81,7 +81,7 @@ const deleteText = (targetTodo) => {
       <div v-show="selectedTodo !== undefined" class="item todo-editor">
         <TodoEditor
           :selected-todo="selectedTodo"
-          @save="saveTest"
+          @save="saveText"
           @delete="deleteText"
         />
       </div>
