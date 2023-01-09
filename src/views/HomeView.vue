@@ -16,10 +16,6 @@ const extractFirstLine = (text) => {
   return text.split("\n")[0];
 };
 
-const reset = () => {
-  localStorage.clear();
-};
-
 const createTodo = () => {
   const id = detectMaxId();
   const todo = {
@@ -47,27 +43,81 @@ const saveTest = (text) => {
 const deleteText = (targetTodo) => {
   todos.value = todos.value.filter((todo) => todo !== targetTodo);
   localStorage.setItem("todos", JSON.stringify(todos.value));
+
+  selectedTodo.value = undefined;
 };
 </script>
 
 <template>
   <main>
-    <div>
-      <ul>
-        <li v-for="todo in todos" :key="todo.id">
-          <button @click="selectTodo(todo)">
-            {{ extractFirstLine(todo.text) }}
-          </button>
-        </li>
-        <li><button @click="createTodo">+</button></li>
-        <li><button @click="reset">reset</button></li>
-      </ul>
-    </div>
+    <div class="container">
+      <div class="item todo-first-lines">
+        <ul>
+          <li v-for="todo in todos" :key="todo.id">
+            <button
+              @click="selectTodo(todo)"
+              :class="
+                todo !== selectedTodo
+                  ? 'link-style-btn todo-first-line'
+                  : 'selected-todo'
+              "
+            >
+              {{ extractFirstLine(todo.text) }}
+            </button>
+          </li>
+          <li>
+            <button @click="createTodo" class="link-style-btn">＋</button>
+          </li>
+        </ul>
+      </div>
 
-    <TodoEditor
-      :selected-todo="selectedTodo"
-      @save="saveTest"
-      @delete="deleteText"
-    />
+      <div class="item todo-editor">
+        <TodoEditor
+          :selected-todo="selectedTodo"
+          @save="saveTest"
+          @delete="deleteText"
+        />
+      </div>
+    </div>
   </main>
 </template>
+
+<style scoped>
+ul {
+  list-style: none;
+}
+
+.container {
+  display: flex;
+}
+
+.todo-first-lines {
+  width: 150px;
+  word-break: break-all;
+}
+
+.link-style-btn {
+  text-align: left;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #0033cc;
+}
+.link-style-btn:hover {
+  text-decoration: underline;
+  color: #002080;
+}
+
+.todo-first-line {
+  text-decoration: underline;
+}
+
+.selected-todo {
+  border: none;
+  background: none;
+}
+
+.todo-editor {
+  margin-left: 30px;
+}
+</style>
