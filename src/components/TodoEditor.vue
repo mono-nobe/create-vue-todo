@@ -31,25 +31,34 @@ const deleteTodo = () => emits("delete", props.selectedTodo);
 </script>
 
 <template>
-  <div v-show="selectedTodo !== undefined">
-    <form>
+  <div>
+    <form id="todo-form">
       <textarea
         cols="30"
-        rows="10"
+        rows="15"
         placeholder="文字を入力してください"
         v-model="todoText"
         required
       ></textarea>
-      <div>
-        <input type="submit" value="保存" @click="saveTodo" />
-        <input type="submit" value="削除" @click="deleteTodo" />
-      </div>
     </form>
+    <div>
+      <button @click="saveTodo" form="todo-form" class="save-btn">保存</button>
+      <button @click="deleteTodo" class="delete-btn">削除</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
 textarea {
   resize: none;
+}
+
+.save-btn {
+  margin-right: 5%;
+  width: 70%;
+}
+
+.delete-btn {
+  width: 25%;
 }
 </style>

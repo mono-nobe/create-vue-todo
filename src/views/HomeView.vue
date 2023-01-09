@@ -50,6 +50,9 @@ const deleteText = (targetTodo) => {
 
 <template>
   <main>
+    <div>
+      <h1>TODO app</h1>
+    </div>
     <div class="container">
       <div class="item todo-first-lines">
         <ul>
@@ -71,7 +74,7 @@ const deleteText = (targetTodo) => {
         </ul>
       </div>
 
-      <div class="item todo-editor">
+      <div v-show="selectedTodo !== undefined" class="item todo-editor">
         <TodoEditor
           :selected-todo="selectedTodo"
           @save="saveTest"
@@ -85,6 +88,7 @@ const deleteText = (targetTodo) => {
 <style scoped>
 ul {
   list-style: none;
+  padding: 0;
 }
 
 .container {
@@ -92,7 +96,7 @@ ul {
 }
 
 .todo-first-lines {
-  width: 150px;
+  width: 20%;
   word-break: break-all;
 }
 
@@ -113,6 +117,7 @@ ul {
 }
 
 .selected-todo {
+  text-align: left;
   border: none;
   background: none;
 }
